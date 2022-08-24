@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container row">
+    <div class="col-md-2 shadow mt-4 p-4 bg-light">
+        <a class="btn bth-lg" data-bs-toggle="modal" data-bs-target="#advertisement">Здесь может быть ваша реклама</a>
+        <div class="modal" tabindex="1" id="advertisement">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="/advertisement" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center">Разместите свою рекламу у нас</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <h5 class="mt-2">Ваше предприятие</h5>
+                            <input class="form-control mb-2" name="company_name"
+                                   placeholder="Введите имя предприятия"
+                                   required>
+                            <h5 class="mt-2">Расскажите о вашей организации</h5>
+                            <input class="form-control mb-2" name="about_company" placeholder=""
+                                   required>
+                            <h5 class="mt-4">Что бы вы хотели прорекламирвовать</h5>
+                            <input class="form-control mb-2" name="message" placeholder="Услугу, товар или другое" required>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отправить</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="container w-75 shadow mt-4 p-4 bg-light ">
+            <h6>Здравствуйте, {{current_user.fullname}}</h6>
+            <a class="text text-danger" href="/logout">Выйти из учетной записи</a>
+            <hr>
+            <h5>Список предприятий:</h5>
+
+            <a class="btn btn-outline-primary" href="/show_my_companies">Только добавленные мной</a>
+            <a class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Добавить
+                предприятие</a>
+            <div class="modal" tabindex="-1" id="exampleModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="/save_company" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Добавление предприятия</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <h5 class="mt-2">Организация</h5>
+                                <input type="" class="form-control mb-2" name="company"
+                                       placeholder="Введите имя предприятия"
+                                       required>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="text-center mt-2">ОГРН</h5>
+                                        <input class="form-control mb-2" name="OGRN" placeholder="" required>
+                                    </div>
+                                    <div class="col-md-6 col-md-offset-4">
+                                        <h5 class="text-center mt-2">ИНН/КПП</h5>
+                                        <input class="form-control mb-2" name="INN" placeholder="" required>
+                                    </div>
+                                </div>
+                                <h5 class="mt-2">Юридический адресс</h5>
+                                <input class="form-control mb-2" name="address" placeholder="Индекс, город, улица"
+                                       required>
+                                <h5 class="mt-4">Руководитель</h5>
+                                <input class="form-control mb-2" name="director" placeholder="ФИО" required>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for i in list_company %}
+        <div class="container w-75 shadow mt-4 p-4 bg-light">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h4 class="mb-1">{{i.company_name}}</h4>
+                        <small class="text-muted">ИНН: {{i.inn}}</small>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">Руководитель: {{i.director}}</h6>
+                        <small class="text-muted">ОГРН: {{i.ogrn}}</small>
+                    </div>
+
+                    <small class="text-muted">Юридический адресс: {{i.address}}</small>
+                </a>
+                <a class="text text-danger" href="/show_link/{{i.id}}">http://127.0.0.1:5000/show_link/{{i.id}}</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% endblock %}
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>

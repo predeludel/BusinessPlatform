@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Справочник предприятий</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="/static/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container w-100 mt-4">
+    {% if current_user.is_authenticated %}
+    {% block main %}
+    {% endblock %}
+    {% else %}
+    {% block login %}
+    {% endblock %}
+    {% endif %}
+</div>
+</body>
+</html>

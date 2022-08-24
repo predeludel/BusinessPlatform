@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block main %}
 <div class="container row">
-    <div class="col-md-2 shadow mt-4 p-4 bg-light">
-        <a class="btn bth-lg" data-bs-toggle="modal" data-bs-target="#advertisement">Здесь может быть ваша реклама</a>
+    <a class="col-md-2 shadow mt-4 p-4 bg-light btn bth-lg" data-bs-toggle="modal" data-bs-target="#advertisement">
+        <h1 class="text-center">Здесь может быть ваша реклама</h1>
         <div class="modal" tabindex="1" id="advertisement">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -22,7 +22,8 @@
                             <input class="form-control mb-2" name="about_company" placeholder=""
                                    required>
                             <h5 class="mt-4">Что бы вы хотели прорекламирвовать</h5>
-                            <input class="form-control mb-2" name="message" placeholder="Услугу, товар или другое" required>
+                            <input class="form-control mb-2" name="message" placeholder="Услугу, товар или другое"
+                                   required>
 
                         </div>
                         <div class="modal-footer">
@@ -33,7 +34,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 
     <div class="col-md-8">
         <div class="container w-75 shadow mt-4 p-4 bg-light ">
@@ -105,8 +106,10 @@
             </div>
         </div>
         {% endfor %}
-        {% endblock %}
+
     </div>
-    <div class="col-md-2">
-    </div>
+    <a class="col-md-2 shadow mt-4 p-4 bg-light btn bth-lg text-center" data-bs-toggle="modal" data-bs-target="#advertisement">
+        <h1 class="text-center">Здесь может быть ваша реклама</h1>
+    </a>
 </div>
+{% endblock %}

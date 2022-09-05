@@ -40,7 +40,9 @@ class Advertisement(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     company_name = database.Column(database.String(255), unique=False, nullable=False)
     message = database.Column(database.String(255), unique=False, nullable=False)
+    company_number = database.Column(database.String(255), unique=False, nullable=False)
     about_company = database.Column(database.String(255), unique=False, nullable=False)
+    status = database.Column(database.Boolean(255), unique=False, nullable=False, default=False)
 
 
 class Parent(database.Model):
@@ -64,6 +66,11 @@ class Children(database.Model):
 
 def save(obj):
     database.session.add(obj)
+    database.session.commit()
+
+
+def delete(obj):
+    database.session.delete(obj)
     database.session.commit()
 
 

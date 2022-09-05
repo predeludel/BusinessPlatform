@@ -1,19 +1,36 @@
 {% extends "base.html" %}
 {% block main %}
 <div class="container row">
-    <a class="col-md-2 shadow mt-4 p-4 bg-light btn bth-lg" data-bs-toggle="modal" data-bs-target="#advertisement">
+    {% if list_advertisement %}
+    {% for i in list_advertisement %}
+    <div class="col-md-2 shadow mt-4 p-4 bg-light btn bth-lg">
+        <div class="bg-light border rounded border-0 border-light d-flex flex-column justify-content-between">
+            <div class="list-group">
+                <div href="#" class="list-group-item list-group-item-action">
+                    <h2 class="mb-1">ТОЛЬКО СЕГОДНЯ {{i.company_name}}</h2>
+                    <h6 class="mb-1">ПРЕДЛАГАЕТ</h6>
+                    <h6 class="mb-1">{{i.message }}</h6>
+                    <small class="text-danger">ЗВОНИТЕ {{i.company_number}}</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="col-md-2 shadow mt-4 p-4 bg-light btn bth-lg" data-bs-toggle="modal" data-bs-target="#advertisement">
         <h1 class="text-center">Здесь может быть ваша реклама</h1>
         <div class="modal" tabindex="1" id="advertisement">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/advertisement" method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center">Разместите свою рекламу у нас</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
 
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center">Разместите свою рекламу у нас</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/advertisement" method="post">
                             <h5 class="mt-2">Ваше предприятие</h5>
                             <input class="form-control mb-2" name="company_name"
                                    placeholder="Введите имя предприятия"
@@ -24,18 +41,23 @@
                             <h5 class="mt-4">Что бы вы хотели прорекламирвовать</h5>
                             <input class="form-control mb-2" name="message" placeholder="Услугу, товар или другое"
                                    required>
+                            <h5 class="mt-2">Контакт компании</h5>
+                            <input class="form-control mb-2" name="company_number"
+                                   placeholder="Введите номер телефона"
+                                   required>
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отправить</button>
-                            <button type="submit" class="btn btn-primary">Сохранить</button>
-                        </div>
-                    </form>
+                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Отправить
+                            </button>
+
+                        </form>
+                    </div>
+
+
                 </div>
             </div>
         </div>
-    </a>
-
+    </div>
+    {% endif %}
     <div class="col-md-8">
         <div class="container w-75 shadow mt-4 p-4 bg-light ">
             <h6>Здравствуйте, {{current_user.fullname}}</h6>
@@ -106,10 +128,29 @@
             </div>
         </div>
         {% endfor %}
-
     </div>
-    <a class="col-md-2 shadow mt-4 p-4 bg-light btn bth-lg text-center" data-bs-toggle="modal" data-bs-target="#advertisement">
+
+    {% if list_advertisement %}
+    {% for i in list_advertisement %}
+    <div class="col-md-2 shadow mt-4 p-4 bg-light btn bth-lg">
+        <div class="bg-light border rounded border-0 border-light d-flex flex-column justify-content-between">
+            <div class="list-group">
+                <div href="#" class="list-group-item list-group-item-action">
+                    <h2 class="mb-1">ТОЛЬКО СЕГОДНЯ {{i.company_name}}</h2>
+                    <h6 class="mb-1">ПРЕДЛАГАЕТ</h6>
+                    <h6 class="mb-1">{{i.message }}</h6>
+                    <small class="text-danger">ЗВОНИТЕ {{i.company_number}}</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="col-md-2 shadow mt-4 p-4 bg-light btn bth-lg text-center" data-bs-toggle="modal"
+         data-bs-target="#advertisement">
         <h1 class="text-center">Здесь может быть ваша реклама</h1>
-    </a>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

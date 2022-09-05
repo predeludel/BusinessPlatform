@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block main %}
+
+
+<div class="container w-75 shadow mt-4 p-4 bg-light ">
+    <h6>Здравствуйте, {{current_user.fullname}}</h6>
+    <a class="text text-danger" href="/logout">Выйти из учетной записи</a>
+    <hr>
+    <h5>Список реклам:</h5>
+
+    {% for i in list_advertisement %}
+    {% if i.status %}
+    {% else %}
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action">
+            <h4 class="mb-1">{{i.company_name}}</h4>
+            <h6 class="mb-1">Предложение: {{i.message}}</h6>
+            <h6 class="mb-1">О компании: {{i.about_company }}</h6>
+            <small class="text-muted">Телефон: {{i.company_number}}</small>
+
+
+        </a>
+
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <a class="btn btn-success m-2" href="/publish_advertisement/{{i.id}}">Опубликовать</a>
+                <a class="btn btn-danger m-2" href="/delete_advertisement/{{i.id}}">Удалить</a>
+
+            </div>
+
+        </div>
+
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endblock %}

@@ -3,7 +3,7 @@ from flask_login import LoginManager, login_required, logout_user, login_user, c
 
 import admin
 from config import MyApp
-from database import find_by_id, User, save, Company, get_all, Advertisement
+from database import find_by_id, User, save, Company, get_all, Advertisement, delete
 
 app = MyApp.app
 database = MyApp.database
@@ -87,21 +87,51 @@ def show_link(company_id):
     return render_template("link.html", company=company)
 
 
-@app.route("/advertisement", methods=["POST"])
+@app.route("/advertisement", methods=['POST'])
 @login_required
 def advertisement():
     company_name = request.form.get("company_name")
     message = request.form.get("message")
     about_company = request.form.get("about_company")
-    advertisement = Advertisement(company_name=company_name, message=message, about_company=about_company)
-    save(advertisement)
+    company_number = request.form.get("company_number")
+    advertisement1 = Advertisement(company_name=company_name, message=message, company_number=company_number,
+                                   about_company=about_company)
+    print(company_name)
+    save(advertisement1)
     return index()
+
+
+@app.route("/delete_advertisement/<advertisement_id>")
+@login_required
+def delete_advertisement(advertisement_id):
+    advertisement = database.session.query(Advertisement).filter(Advertisement.id == int(advertisement_id)).first()
+    delete(advertisement)
+    return admin_advertisement()
+
+
+@app.route("/publish_advertisement/<advertisement_id>")
+@login_required
+def publish_advertisement(advertisement_id):
+    advertisement = database.session.query(Advertisement).filter(Advertisement.id == int(advertisement_id)).first()
+    advertisement.status = True
+    save(advertisement)
+    return admin_advertisement()
 
 
 @app.route("/")
 @login_required
 def index():
-    return render_template("main.html", list_company=get_all(Company))
+    advertisement = database.session.query(Advertisement).filter(Advertisement.status is True).all()
+    print(advertisement)
+    if advertisement is None:
+        advertisement = False
+    return render_template("main.html", list_company=get_all(Company), list_advertisement=advertisement)
+
+
+@app.route("/admin/12345")
+@login_required
+def admin_advertisement():
+    return render_template("admin.html", list_advertisement=get_all(Advertisement))
 
 
 if __name__ == '__main__':

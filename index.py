@@ -121,7 +121,7 @@ def publish_advertisement(advertisement_id):
 @app.route("/")
 @login_required
 def index():
-    advertisement = database.session.query(Advertisement).filter(Advertisement.status is True).all()
+    advertisement = database.session.query(Advertisement).filter(Advertisement.status == True).all()
     print(advertisement)
     if advertisement is None:
         advertisement = False
